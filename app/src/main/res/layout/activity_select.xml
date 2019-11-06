@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical"
+    android:padding="20dp">
+
+
+    <RelativeLayout
+        android:id="@+id/rl_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_pic"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginRight="15dp"
+            android:scaleType="fitXY"
+            tools:background="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/iv_pic"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="LENCIER兰叙 全棉春秋被双人加厚保暖被芯冬被单人学生宿舍空调被LENCIER兰叙 LENCIER兰叙 全棉春秋被双人加厚保暖被芯冬被单人学生宿舍空调被全棉春秋被双人加厚保暖被芯冬被单人学生宿舍空调被"
+            android:textColor="#333333"
+            android:textSize="12sp" />
+        <!--选择结果-->
+        <TextView
+            android:id="@+id/tv_selected_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/iv_pic"
+            android:layout_below="@id/tv_title"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="   "
+            android:textColor="@color/color_dd4e40"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_title"
+        android:overScrollMode="never" />
+
+</LinearLayout>
