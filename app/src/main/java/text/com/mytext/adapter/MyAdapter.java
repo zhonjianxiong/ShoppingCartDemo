@@ -95,15 +95,16 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
      */
     private void addChildText(FlowLayout group, final SaleDimensionsBean.DimBean.SaleAttrBean saleAttrBean,final  int position) {
         TextView tvChild = (TextView) LayoutInflater.from(mContext).inflate(R.layout.flow_select, group, false);
-        /** 循环遍历库存，判断库存是否为0， 为0 不可选择*/
+        /** 循环遍历库存，判断库存是否为0， 为0 不可选择，这里循环较多，建议优化*/
         // 7 8 9 10 11
         for (int i = 0; i < mStockBeanList.size(); i++) {
             // 7 8 9 10 11
             for (int j = 0; j < saleAttrBean.getSkuIds().size(); j++) {
                 if (mStockBeanList.get(i).getSkuId() == saleAttrBean.getSkuIds().get(j)) {
-                    //库存==0 不可点击
+                    //库存== 0 不可点击
                     if (mStockBeanList.get(i).getStock() != 0) {
                         saleAttrBean.setSelect(true);
+                        //在库存满足的情况下，skuids 匹配，匹配不上则不可选择
                         if (!compareList(saleAttrBean.getSkuIds(), mSelectSaleAttrBean, position)) {
                             saleAttrBean.setSelect(false);
                         }
@@ -161,7 +162,13 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         void onItemClicks(int pos, Map<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> selectSaleAttrBean);
     }
 
-    //集合数据对比是否相同
+    /**
+     *根据已经选择的规格对象，匹配 skuids
+     * @param list1  当前规格
+     * @param saleAttrBeanMap   已经选择的规格集合
+     * @param position  规格类型位置
+     * @return
+     */
     private boolean compareList(List<Integer> list1, Map<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> saleAttrBeanMap,  int position) {
         for (Map.Entry<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> entry : saleAttrBeanMap.entrySet()) {
             if (entry.getKey() != position) {
@@ -193,8 +200,5 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
         return true;
     }
-
-
-
 
 }
