@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +52,7 @@ public class SelectActivity extends AppCompatActivity {
         //本地数据源
         int type = getIntent().getIntExtra("type", 0);
         if (type == 0) {
-            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson, new TypeToken<SaleDimensionsBean>() {
+            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson2, new TypeToken<SaleDimensionsBean>() {
             }.getType());
         } else {
 //            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson2, new TypeToken<SaleDimensionsBean>() {
@@ -60,13 +61,13 @@ public class SelectActivity extends AppCompatActivity {
             }.getType());
         }
         Log.e("selectJson", ConstantsHelper.selectJson);
-        mAdapter = new MyAdapter(mContext, saleDimensionsBean);
-        //设置默认的skuid
-        mAdapter.setmSelectSkuid(5547);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(SelectActivity.this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(mAdapter);
-        select();
-    }
+                mAdapter = new MyAdapter(mContext, saleDimensionsBean);
+                //设置默认的skuid
+                mAdapter.setSelectSkuid(MainActivity.PUBLIC_SKUID);
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(SelectActivity.this, LinearLayoutManager.VERTICAL, false));
+                mRecyclerView.setAdapter(mAdapter);
+                select();
+                }
 
 
     /**
@@ -84,10 +85,18 @@ public class SelectActivity extends AppCompatActivity {
                     result.append(selectSaleAttrBean.get(entry.getKey()).getSaleValue() + "  ");
                 }
                 Toast.makeText(mContext, "点击了" + result, Toast.LENGTH_SHORT).show();
-                Toast.makeText(mContext, "公共的  skuid:" + "" + "", Toast.LENGTH_SHORT).show();
                 mTvSelectResult.setText("已选择： " + result);
             }
         });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            MainActivity.PUBLIC_SKUID = mAdapter.getPublicSkuid();
+            Toast.makeText(mContext, "公共的  skuid:" + mAdapter.getPublicSkuid() + "", Toast.LENGTH_SHORT).show();
+            mAdapter.removerPublicSkuid();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static int PUBLIC_SKUID = 5547;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,5 +32,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(intent));
             }
         });
+
     }
 }

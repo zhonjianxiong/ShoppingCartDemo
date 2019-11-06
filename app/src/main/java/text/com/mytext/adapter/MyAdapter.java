@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import text.com.mytext.FlowLayout;
 import text.com.mytext.R;
 import text.com.mytext.SaleDimensionsBean;
+import text.com.mytext.Utils;
 
 /**
  * 作者：Zhon JianXiong
@@ -35,6 +34,10 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private int mSelectSkuid = 0;
 
+    private int mPublicSkuid = 0;
+
+    private StringBuffer mPublicSkuidArr = new StringBuffer();
+
     public MyAdapter(Context context, SaleDimensionsBean saleDimensionsBean) {
         this.mContext = context;
         this.mDimBeanList = saleDimensionsBean.getDim();
@@ -42,8 +45,29 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         mSelectSaleAttrBean = new HashMap<>();
     }
 
-    public void setmSelectSkuid(int mSelectSkuid) {
+    public void setSelectSkuid(int mSelectSkuid) {
         this.mSelectSkuid = mSelectSkuid;
+    }
+
+    public int getPublicSkuid() {
+        if (mPublicSkuidArr.length() > 0) {
+            String[] arr = mPublicSkuidArr.toString().split(",");
+            try {
+                mPublicSkuid = Integer.valueOf(Utils.findMaxString(arr));
+                Log.e("mPublicSkuidArr", mPublicSkuidArr.toString() + "");
+            } catch (Exception e) {
+                Log.e("", e.getMessage() + "");
+                mPublicSkuid = 0;
+            }
+        }
+        return mPublicSkuid;
+    }
+
+    /**
+     * 清除相关信息
+     */
+    public void removerPublicSkuid() {
+        mPublicSkuidArr.setLength(0);
     }
 
     @Override
@@ -125,6 +149,9 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             tvChild.setEnabled(true);
             //已经选择的规格,显示红色
             if (mSelectSaleAttrBean.get(position) != null && mSelectSaleAttrBean.get(position).getSaleValue().equals(saleAttrBean.getSaleValue())) {
+                for (int i = 0; i < saleAttrBean.getSkuIds().size(); i++) {
+                    mPublicSkuidArr.append(saleAttrBean.getSkuIds().get(i) + ",");
+                }
                 tvChild.setBackgroundResource(R.drawable.frame_reed_gray_10);
                 tvChild.setTextColor(mContext.getResources().getColor(R.color.color_dd4e40));
             } else { // 未选择
@@ -180,12 +207,12 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
      * @return
      */
     private boolean compareList(List<Integer> list1, Map<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> saleAttrBeanMap,  int position) {
+
         for (Map.Entry<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> entry : saleAttrBeanMap.entrySet()) {
             //skuid不和同类型的规格进行匹配
             if (entry.getKey() != position) {
                 int containNum = 0;
                 SaleDimensionsBean.DimBean.SaleAttrBean saleAttrBean = saleAttrBeanMap.get(entry.getKey());
-                Set<Integer> hashCodeSet = new HashSet<>();
                 for (int i = 0; i < saleAttrBean.getSkuIds().size(); i++) {
                     for (int j = 0; j < list1.size(); j++) {
                         Log.e("SkuIds  A", saleAttrBean.getSkuIds().get(i) + "");
@@ -195,7 +222,6 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                         }
                     }
                 }
-                Log.e("最终的  B", mSelectSkuid + "");
                 if (containNum > 0) {
                     return false;
                 } else {
