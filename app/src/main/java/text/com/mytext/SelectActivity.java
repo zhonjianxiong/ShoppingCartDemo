@@ -54,11 +54,15 @@ public class SelectActivity extends AppCompatActivity {
             saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson, new TypeToken<SaleDimensionsBean>() {
             }.getType());
         } else {
-            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson2, new TypeToken<SaleDimensionsBean>() {
+//            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson2, new TypeToken<SaleDimensionsBean>() {
+//            }.getType());
+            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson3, new TypeToken<SaleDimensionsBean>() {
             }.getType());
         }
         Log.e("selectJson", ConstantsHelper.selectJson);
         mAdapter = new MyAdapter(mContext, saleDimensionsBean);
+        //设置默认的skuid
+        mAdapter.setmSelectSkuid(5547);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(SelectActivity.this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
         select();
@@ -80,6 +84,7 @@ public class SelectActivity extends AppCompatActivity {
                     result.append(selectSaleAttrBean.get(entry.getKey()).getSaleValue() + "  ");
                 }
                 Toast.makeText(mContext, "点击了" + result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "公共的  skuid:" + "" + "", Toast.LENGTH_SHORT).show();
                 mTvSelectResult.setText("已选择： " + result);
             }
         });

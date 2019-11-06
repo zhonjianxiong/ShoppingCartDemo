@@ -229,4 +229,115 @@ public class ConstantsHelper {
             "    }\n" +
             "  ]\n" +
             "}";
+
+    public static String selectJson3 = "{\n" +
+            "\t\t\"dim\": [{\n" +
+            "\t\t\t\"id\": 2,\n" +
+            "\t\t\t\"saleName\": \"颜色\",\n" +
+            "\t\t\t\"saleAttr\": [{\n" +
+            "\t\t\t\t\"saleValue\": \"黑色5559, 5560, 5561\",\n" +
+            "\t\t\t\t\"image\": \"http://img13.360buyimg.com/vc/jfs/t1/4394/21/3522/68010/5b997c0aE91c7291d/b8494bf281991f94.jpg\",\n" +
+            "\t\t\t\t\"skuIds\": [5559, 5560, 5561]\n" +
+            "\t\t\t}, {\n" +
+            "\t\t\t\t\"saleValue\": \"珊瑚色5544, 5545, 5546\",\n" +
+            "\t\t\t\t\"image\": \"http://img13.360buyimg.com/vc/jfs/t1/5732/7/3498/82005/5b997c06E5acb4d5b/94941ba020568879.jpg\",\n" +
+            "\t\t\t\t\"skuIds\": [5544, 5545, 5546]\n" +
+            "\t\t\t}, {\n" +
+            "\t\t\t\t\"saleValue\": \"蓝色5553, 5554, 5555\",\n" +
+            "\t\t\t\t\"image\": \"http://img13.360buyimg.com/vc/jfs/t1/3852/5/3480/79402/5b997c04E967b8b46/ea8c29f80758b75b.jpg\",\n" +
+            "\t\t\t\t\"skuIds\": [5553, 5554, 5555]\n" +
+            "\t\t\t}, {\n" +
+            "\t\t\t\t\"saleValue\": \"白色5547, 5548, 5549\",\n" +
+            "\t\t\t\t\"image\": \"http://img13.360buyimg.com/vc/jfs/t1/2405/38/3454/66573/5b997bfcEb5f40c1a/19b11cfbb8afc3a1.jpg\",\n" +
+            "\t\t\t\t\"skuIds\": [5547, 5548, 5549]\n" +
+            "\t\t\t}, {\n" +
+            "\t\t\t\t\"saleValue\": \"黄色5556, 5557, 5558\",\n" +
+            "\t\t\t\t\"image\": \"http://img13.360buyimg.com/vc/jfs/t1/5142/18/3471/77640/5b997bfdE6907a2b5/78e6f28519937ab1.jpg\",\n" +
+            "\t\t\t\t\"skuIds\": [5556, 5557, 5558]\n" +
+            "\t\t\t}, {\n" +
+            "\t\t\t\t\"saleValue\": \"红色5552, 5550, 5551\",\n" +
+            "\t\t\t\t\"image\": \"http://img13.360buyimg.com/vc/jfs/t1/1976/13/3467/76597/5b997beeE303b4206/5b5e74d0978360a1.jpg\",\n" +
+            "\t\t\t\t\"skuIds\": [5552, 5550, 5551]\n" +
+            "\t\t\t}]\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"id\": 3,\n" +
+            "\t\t\t\"saleName\": \"版本\",\n" +
+            "\t\t\t\"saleAttr\": [{\n" +
+            "\t\t\t\t\"saleValue\": \"64GB 5552, 5554, 5558, 5559, 5544, 5547\",\n" +
+            "\t\t\t\t\"image\": null,\n" +
+            "\t\t\t\t\"skuIds\": [5552, 5554, 5558, 5559, 5544, 5547]\n" +
+            "\t\t\t}, {\n" +
+            "\t\t\t\t\"saleValue\": \"256GB 5553, 5556, 5560, 5546, 5549, 5550\",\n" +
+            "\t\t\t\t\"image\": null,\n" +
+            "\t\t\t\t\"skuIds\": [5553, 5556, 5560, 5546, 5549, 5550]\n" +
+            "\t\t\t}, {\n" +
+            "\t\t\t\t\"saleValue\": \"128GB 5555, 5557, 5545, 5561, 5548, 5551\",\n" +
+            "\t\t\t\t\"image\": null,\n" +
+            "\t\t\t\t\"skuIds\": [5555, 5557, 5545, 5561, 5548, 5551]\n" +
+            "\t\t\t}]\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"id\": 27,\n" +
+            "\t\t\t\"saleName\": \"购买方式\",\n" +
+            "\t\t\t\"saleAttr\": [{\n" +
+            "\t\t\t\t\"saleValue\": \"公开版   5544, 5545, 5546, 5547, 5548, 5549, 5550, 5551, 5552, 5553, 5554, 5555, 5556, 5557, 5558, 5559, 5560, 5561\",\n" +
+            "\t\t\t\t\"image\": null,\n" +
+            "\t\t\t\t\"skuIds\": [5544, 5545, 5546, 5547, 5548, 5549, 5550, 5551, 5552, 5553, 5554, 5555, 5556, 5557, 5558, 5559, 5560, 5561]\n" +
+            "\t\t\t}]\n" +
+            "\t\t}],\n" +
+            "\t\t\"stock\": [{\n" +
+            "\t\t\t\"skuId\": 5556,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5551,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5552,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5561,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5550,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5560,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5549,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5558,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5553,\n" +
+            "\t\t\t\"stock\": 16\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5545,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5548,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5557,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5546,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5544,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5559,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5547,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5555,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}, {\n" +
+            "\t\t\t\"skuId\": 5554,\n" +
+            "\t\t\t\"stock\": 50\n" +
+            "\t\t}]\n" +
+            "\t}";
 }

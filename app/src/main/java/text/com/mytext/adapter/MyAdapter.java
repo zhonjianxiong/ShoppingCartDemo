@@ -2,6 +2,7 @@ package text.com.mytext.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,8 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private Context mContext;
 
+    private int mSelectSkuid = 0;
+
     public MyAdapter(Context context, SaleDimensionsBean saleDimensionsBean) {
         this.mContext = context;
         this.mDimBeanList = saleDimensionsBean.getDim();
@@ -39,6 +42,9 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         mSelectSaleAttrBean = new HashMap<>();
     }
 
+    public void setmSelectSkuid(int mSelectSkuid) {
+        this.mSelectSkuid = mSelectSkuid;
+    }
 
     @Override
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -105,8 +111,11 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     if (mStockBeanList.get(i).getStock() != 0) {
                         saleAttrBean.setSelect(true);
                         //在库存满足的情况下，skuids 匹配，匹配不上则不可选择
-                        if (!compareList(saleAttrBean.getSkuIds(), mSelectSaleAttrBean, position)) {
+                        if (compareList(saleAttrBean.getSkuIds(), mSelectSaleAttrBean, position) && mSelectSaleAttrBean.size() > 0) {
                             saleAttrBean.setSelect(false);
+                        }
+                        if (mSelectSkuid != 0) {
+                            setSelectedView(saleAttrBean, position);
                         }
                     }
                 }
@@ -122,7 +131,7 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 tvChild.setBackgroundResource(R.drawable.frame_f4_10);
                 tvChild.setTextColor(mContext.getResources().getColor(R.color.color_333333));
             }
-        } else { //库存不足，不可选择
+        } else { //库存不足或skuid不匹配，不可选择
             tvChild.setEnabled(false);
             tvChild.setBackgroundResource(R.drawable.frame_f4_10);
             tvChild.setTextColor(mContext.getResources().getColor(R.color.color_33171717));
@@ -133,6 +142,7 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 //二次点击取消上次所选规格,重复点击同一个规格时
+                mSelectSkuid = 0;
                 if (mSelectSaleAttrBean.get(position) != null && mSelectSaleAttrBean.get(position).getSaleValue().equals(saleAttrBean.getSaleValue())) {
                     mSelectSaleAttrBean.remove(position);
                 } else {
@@ -163,7 +173,7 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     /**
-     *根据已经选择的规格对象，匹配 skuids
+     * 根据已经选择的规格对象，匹配 skuids
      * @param list1  当前规格
      * @param saleAttrBeanMap   已经选择的规格集合
      * @param position  规格类型位置
@@ -171,34 +181,40 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
      */
     private boolean compareList(List<Integer> list1, Map<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> saleAttrBeanMap,  int position) {
         for (Map.Entry<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> entry : saleAttrBeanMap.entrySet()) {
+            //skuid不和同类型的规格进行匹配
             if (entry.getKey() != position) {
-                if (entry.getKey() != position) {
-                    SaleDimensionsBean.DimBean.SaleAttrBean saleAttrBean = saleAttrBeanMap.get(entry.getKey());
-                    Set<Integer> hashCodeSet = new HashSet<>();
-                    if (entry.getKey() > position) {
-                        for (Integer adInfoData : saleAttrBean.getSkuIds()) {
-                            hashCodeSet.add(adInfoData.hashCode());
-                        }
-                        for (Integer adInfoData : list1) {
-                            if (!hashCodeSet.contains(adInfoData.hashCode())){
-                                return false;
-                            }
-                        }
-                    } else {
-                        for (Integer adInfoData : list1) {
-                            hashCodeSet.add(adInfoData.hashCode());
-                        }
-                        for (Integer adInfoData : saleAttrBean.getSkuIds()) {
-                            if (!hashCodeSet.contains(adInfoData.hashCode())){
-                                return false;
-                            }
+                int containNum = 0;
+                SaleDimensionsBean.DimBean.SaleAttrBean saleAttrBean = saleAttrBeanMap.get(entry.getKey());
+                Set<Integer> hashCodeSet = new HashSet<>();
+                for (int i = 0; i < saleAttrBean.getSkuIds().size(); i++) {
+                    for (int j = 0; j < list1.size(); j++) {
+                        Log.e("SkuIds  A", saleAttrBean.getSkuIds().get(i) + "");
+                        Log.e("SkuIds  B", list1.get(j) + "");
+                        if (saleAttrBean.getSkuIds().get(i).equals(list1.get(j))) {
+                            containNum++;
                         }
                     }
-
+                }
+                Log.e("最终的  B", mSelectSkuid + "");
+                if (containNum > 0) {
+                    return false;
+                } else {
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
+    }
+
+    /**
+     * 设置默认的skuid, 匹配默认选择的View
+     */
+    private void setSelectedView(SaleDimensionsBean.DimBean.SaleAttrBean saleAttrBean, int position) {
+        for (int i = 0; i < saleAttrBean.getSkuIds().size(); i++) {
+            if (saleAttrBean.getSkuIds().get(i).equals(mSelectSkuid)) {
+                mSelectSaleAttrBean.put(position, saleAttrBean);
+            }
+        }
     }
 
 }
