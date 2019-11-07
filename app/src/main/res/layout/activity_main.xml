@@ -5,21 +5,59 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context="text.com.mytext.MainActivity">
 
-    <TextView
-        android:id="@+id/tv_button"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:gravity="center"
-        android:visibility="gone"
-        android:text="点击产品A" />
+
 
     <TextView
-        android:id="@+id/tv_button2"
-        android:layout_width="100dp"
+        android:id="@+id/tv_public_skuid"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:gravity="center"
-        android:text="点击产品B" />
+        android:textSize="22sp"
+        android:textColor="@color/color_dd4e40"
+        android:text="" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="点击产品A" />
+
+        <TextView
+            android:id="@+id/tv_button2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="点击产品B" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_button3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="点击产品C" />
+
+        <TextView
+            android:id="@+id/tv_button4"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="点击产品D" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

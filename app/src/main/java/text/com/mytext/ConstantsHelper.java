@@ -340,4 +340,50 @@ public class ConstantsHelper {
             "\t\t\t\"stock\": 50\n" +
             "\t\t}]\n" +
             "\t}";
+
+    public static String selectJson4 = "{\n" +
+            "  \"dim\": [\n" +
+            "    {\n" +
+            "      \"id\": 6,\n" +
+            "      \"saleName\": \"功效\",\n" +
+            "      \"saleAttr\": [\n" +
+            "        {\n" +
+            "          \"saleValue\": \"清透水润\",\n" +
+            "          \"image\": \"http://img13.360buyimg.com/vc/jfs/t22021/309/232698497/371840/7e9f926/5b0654f6N3885b7b8.jpg\",\n" +
+            "          \"skuIds\": [\n" +
+            "            51\n" +
+            "          ]\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"saleValue\": \"樱花甜香\",\n" +
+            "          \"image\": \"http://img13.360buyimg.com/vc/jfs/t4039/30/1514052304/176755/d6bd90d2/587c46f2Nd30833ad.jpg\",\n" +
+            "          \"skuIds\": [\n" +
+            "            50\n" +
+            "          ]\n" +
+            "        },\n" +
+            "        {\n" +
+            "          \"saleValue\": \"轻柔活肤\",\n" +
+            "          \"image\": \"http://img13.360buyimg.com/vc/jfs/t1/46463/6/12951/195906/5d9d6b8dE7f7257ec/3375049263dc8d11.jpg\",\n" +
+            "          \"skuIds\": [\n" +
+            "            52\n" +
+            "          ]\n" +
+            "        }\n" +
+            "      ]\n" +
+            "    }\n" +
+            "  ],\n" +
+            "  \"stock\": [\n" +
+            "    {\n" +
+            "      \"skuId\": 50,\n" +
+            "      \"stock\": 50\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"skuId\": 52,\n" +
+            "      \"stock\": 50\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"skuId\": 51,\n" +
+            "      \"stock\": 50\n" +
+            "    }\n" +
+            "  ]\n" +
+            "}";
 }

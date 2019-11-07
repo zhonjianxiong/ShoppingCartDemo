@@ -49,14 +49,23 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         this.mSelectSkuid = mSelectSkuid;
     }
 
+    public Map<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> getSelectSaleAttrBean() {
+        return mSelectSaleAttrBean;
+    }
+
+    /**
+     * 获取共同的skuid
+     * @return
+     */
     public int getPublicSkuid() {
         if (mPublicSkuidArr.length() > 0) {
+            Log.e("mPublicSkuid", mPublicSkuidArr.toString() + "");
             String[] arr = mPublicSkuidArr.toString().split(",");
             try {
-                mPublicSkuid = Integer.valueOf(Utils.findMaxString(arr));
-                Log.e("mPublicSkuidArr", mPublicSkuidArr.toString() + "");
+                String mPublicSkuidStr = Utils.findMaxString(arr);
+                mPublicSkuid = Integer.valueOf(mPublicSkuidStr);
             } catch (Exception e) {
-                Log.e("", e.getMessage() + "");
+                Log.e("mPublicSkuid", e.getMessage() + "");
                 mPublicSkuid = 0;
             }
         }
@@ -80,17 +89,11 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(MyAdapter.ViewHolder holder, int position) {
 
-        /**
-         * 当前规格信息
-         */
+        /** 当前规格信息 */
         SaleDimensionsBean.DimBean dimBean = mDimBeanList.get(position);
-        /**
-         * 产品规格分类名称，如颜色， 尺码等
-         */
+        /*** 产品规格分类名称，如颜色， 尺码等 */
         holder.mTvTitle.setText(dimBean.getSaleName());
-        /**
-         * 根据本规格循环添加规格流式布局参数数据（纯色、黑色、白色等）
-         */
+        /** 根据本规格循环添加规格流式布局参数数据（纯色、黑色、白色等）*/
         List<SaleDimensionsBean.DimBean.SaleAttrBean> mSaleAttrBean = dimBean.getSaleAttr();
         //判断此规格是否为空且有数据
         if (mSaleAttrBean != null && mSaleAttrBean.size() > 0) {
@@ -135,11 +138,11 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     if (mStockBeanList.get(i).getStock() != 0) {
                         saleAttrBean.setSelect(true);
                         //在库存满足的情况下，skuids 匹配，匹配不上则不可选择
-                        if (compareList(saleAttrBean.getSkuIds(), mSelectSaleAttrBean, position) && mSelectSaleAttrBean.size() > 0) {
-                            saleAttrBean.setSelect(false);
-                        }
                         if (mSelectSkuid != 0) {
                             setSelectedView(saleAttrBean, position);
+                        }
+                        if (compareList(saleAttrBean.getSkuIds(), mSelectSaleAttrBean, position) && mSelectSaleAttrBean.size() > 0) {
+                            saleAttrBean.setSelect(false);
                         }
                     }
                 }
@@ -178,6 +181,7 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 }
                 //点击事件回调
                 listener.onItemClicks(position, mSelectSaleAttrBean);
+                removerPublicSkuid();
                 notifyDataSetChanged();
             }
         });
@@ -213,12 +217,11 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             if (entry.getKey() != position) {
                 int containNum = 0;
                 SaleDimensionsBean.DimBean.SaleAttrBean saleAttrBean = saleAttrBeanMap.get(entry.getKey());
-                for (int i = 0; i < saleAttrBean.getSkuIds().size(); i++) {
-                    for (int j = 0; j < list1.size(); j++) {
-                        Log.e("SkuIds  A", saleAttrBean.getSkuIds().get(i) + "");
-                        Log.e("SkuIds  B", list1.get(j) + "");
+                for (int j = 0; j < list1.size(); j++) {
+                    for (int i = 0; i < saleAttrBean.getSkuIds().size(); i++) {
+                        Log.e("aleAttrBean=: ",  saleAttrBean.getSkuIds().get(i).toString());
                         if (saleAttrBean.getSkuIds().get(i).equals(list1.get(j))) {
-                            containNum++;
+                            containNum = containNum + 1;
                         }
                     }
                 }
@@ -242,5 +245,6 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
         }
     }
+
 
 }

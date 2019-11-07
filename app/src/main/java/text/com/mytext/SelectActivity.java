@@ -2,6 +2,7 @@ package text.com.mytext;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,22 +53,32 @@ public class SelectActivity extends AppCompatActivity {
         //本地数据源
         int type = getIntent().getIntExtra("type", 0);
         if (type == 0) {
+            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson, new TypeToken<SaleDimensionsBean>() {
+            }.getType());
+        } else if (type == 1) {
+//            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson2, new TypeToken<SaleDimensionsBean>() {
+//            }.getType());
             saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson2, new TypeToken<SaleDimensionsBean>() {
             }.getType());
-        } else {
+        } else if (type == 2) {
 //            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson2, new TypeToken<SaleDimensionsBean>() {
 //            }.getType());
             saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson3, new TypeToken<SaleDimensionsBean>() {
             }.getType());
+        } else if (type == 3) {
+//            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson2, new TypeToken<SaleDimensionsBean>() {
+//            }.getType());
+            saleDimensionsBean = new Gson().fromJson(ConstantsHelper.selectJson4, new TypeToken<SaleDimensionsBean>() {
+            }.getType());
         }
         Log.e("selectJson", ConstantsHelper.selectJson);
-                mAdapter = new MyAdapter(mContext, saleDimensionsBean);
-                //设置默认的skuid
-                mAdapter.setSelectSkuid(MainActivity.PUBLIC_SKUID);
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(SelectActivity.this, LinearLayoutManager.VERTICAL, false));
-                mRecyclerView.setAdapter(mAdapter);
-                select();
-                }
+        mAdapter = new MyAdapter(mContext, saleDimensionsBean);
+        //设置默认的skuid
+        mAdapter.setSelectSkuid(MainActivity.PUBLIC_SKUID);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(SelectActivity.this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setAdapter(mAdapter);
+        select();
+    }
 
 
     /**
@@ -75,7 +86,6 @@ public class SelectActivity extends AppCompatActivity {
      * 返回的是一个 MAP 集合
      */
     private void select() {
-
         mAdapter.setListener(new MyAdapter.OnItemClickListener() {
 
             @Override
@@ -88,14 +98,32 @@ public class SelectActivity extends AppCompatActivity {
                 mTvSelectResult.setText("已选择： " + result);
             }
         });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setSelectShop();
+            }
+        }, 200);
+    }
+
+    /**
+     * 将已经选择的产品显示出来
+     */
+    private void setSelectShop() {
+        Map<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> selectSaleAttrBean = mAdapter.getSelectSaleAttrBean();
+        StringBuffer result = new StringBuffer();
+        for (Map.Entry<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> entry : selectSaleAttrBean.entrySet()) {
+            result.append(selectSaleAttrBean.get(entry.getKey()).getSaleValue() + "  ");
+        }
+        mTvSelectResult.setText("已选择： " + result);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             MainActivity.PUBLIC_SKUID = mAdapter.getPublicSkuid();
-            Toast.makeText(mContext, "公共的  skuid:" + mAdapter.getPublicSkuid() + "", Toast.LENGTH_SHORT).show();
-            mAdapter.removerPublicSkuid();
+            Toast.makeText(mContext, "公共的  skuid:" + MainActivity.PUBLIC_SKUID+ "", Toast.LENGTH_SHORT).show();
         }
         return super.onKeyDown(keyCode, event);
     }
