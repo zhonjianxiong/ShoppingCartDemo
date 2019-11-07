@@ -138,8 +138,8 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     if (mStockBeanList.get(i).getStock() != 0) {
                         saleAttrBean.setSelect(true);
                         //在库存满足的情况下，skuids 匹配，匹配不上则不可选择
-                        if (mSelectSkuid != 0) {
-                            setSelectedView(saleAttrBean, position);
+                        if (mSelectSkuid != 0 && saleAttrBean.getSkuIds().get(j).equals(mSelectSkuid)) {
+                            mSelectSaleAttrBean.put(position, saleAttrBean);
                         }
                         if (compareList(saleAttrBean.getSkuIds(), mSelectSaleAttrBean, position) && mSelectSaleAttrBean.size() > 0) {
                             saleAttrBean.setSelect(false);
@@ -235,16 +235,6 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return false;
     }
 
-    /**
-     * 设置默认的skuid, 匹配默认选择的View
-     */
-    private void setSelectedView(SaleDimensionsBean.DimBean.SaleAttrBean saleAttrBean, int position) {
-        for (int i = 0; i < saleAttrBean.getSkuIds().size(); i++) {
-            if (saleAttrBean.getSkuIds().get(i).equals(mSelectSkuid)) {
-                mSelectSaleAttrBean.put(position, saleAttrBean);
-            }
-        }
-    }
 
 
 }
