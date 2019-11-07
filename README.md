@@ -1,4 +1,4 @@
-# ShoppDemo尚品规格选择器
+# ShoppDemo规格选择器
 简单的购物车规格选择器，数据格式参考JD选择
 # 技术点
 集合 ： 用到了List,HashSet,HashMap,需要知道这几个集合的特点与用法
