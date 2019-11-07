@@ -98,6 +98,7 @@ public class SelectActivity extends AppCompatActivity {
                 mTvSelectResult.setText("已选择： " + result);
             }
         });
+        //延迟获取所选数据
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
