@@ -80,14 +80,14 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_select, parent, false);
-        RecyclerView.ViewHolder holder = new MyAdapter.ViewHolder(view);
-        return (MyAdapter.ViewHolder) holder;
+        ViewHolder holder = new ViewHolder(view);
+        return (ViewHolder) holder;
     }
 
     @Override
-    public void onBindViewHolder(MyAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
 
         /** 当前规格信息 */
         SaleDimensionsBean.DimBean dimBean = mDimBeanList.get(position);
@@ -189,7 +189,6 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         group.addView(tvChild);
     }
 
-
     /**
      * 点击按钮的事件
      */
@@ -234,7 +233,4 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
         return false;
     }
-
-
-
 }

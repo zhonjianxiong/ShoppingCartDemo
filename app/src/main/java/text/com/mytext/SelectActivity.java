@@ -20,6 +20,7 @@ import java.util.Map;
 
 import text.com.mytext.adapter.MyAdapter;
 
+
 /**
  * Created by hu on 2019/11/1.
  */
@@ -87,22 +88,22 @@ public class SelectActivity extends AppCompatActivity {
      */
     private void select() {
         mAdapter.setListener(new MyAdapter.OnItemClickListener() {
-
             @Override
             public void onItemClicks(int pos,  Map<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> selectSaleAttrBean) {
-                StringBuffer result = new StringBuffer();
-                for (Map.Entry<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> entry : selectSaleAttrBean.entrySet()) {
-                    result.append(selectSaleAttrBean.get(entry.getKey()).getSaleValue() + "  ");
-                }
-                Toast.makeText(mContext, "点击了" + result, Toast.LENGTH_SHORT).show();
-                mTvSelectResult.setText("已选择： " + result);
+                selectShop();
             }
         });
+        selectShop();
+    }
+    /**
+     * 选择尚品
+     */
+    private void selectShop () {
         //延迟获取所选数据
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                setSelectShop();
+                setSelectShopView();
             }
         }, 200);
     }
@@ -110,13 +111,15 @@ public class SelectActivity extends AppCompatActivity {
     /**
      * 将已经选择的产品显示出来
      */
-    private void setSelectShop() {
+    private void setSelectShopView() {
         Map<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> selectSaleAttrBean = mAdapter.getSelectSaleAttrBean();
         StringBuffer result = new StringBuffer();
         for (Map.Entry<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> entry : selectSaleAttrBean.entrySet()) {
             result.append(selectSaleAttrBean.get(entry.getKey()).getSaleValue() + "  ");
         }
+
         mTvSelectResult.setText("已选择： " + result);
+        Toast.makeText(mContext, "已选择" + result, Toast.LENGTH_SHORT).show();
         mAdapter.notifyDataSetChanged();
     }
 
