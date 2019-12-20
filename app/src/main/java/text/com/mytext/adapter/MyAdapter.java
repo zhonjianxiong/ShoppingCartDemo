@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,8 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     /** 库存列表 */
     private List<SaleDimensionsBean.StockBean> mStockBeanList;
 
+    private List<Integer> similarGroupSkuIds = new ArrayList<>();
+
     private Context mContext;
 
     private int mSelectSkuid = 0;
@@ -43,6 +46,8 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         this.mDimBeanList = saleDimensionsBean.getDim();
         this.mStockBeanList = saleDimensionsBean.getStock();
         mSelectSaleAttrBean = new HashMap<>();
+        similarGroupSkuIds.add(50);
+        similarGroupSkuIds.add(51);
     }
 
     public void setSelectSkuid(int mSelectSkuid) {
@@ -143,6 +148,12 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                         }
                         if (compareList(saleAttrBean.getSkuIds(), mSelectSaleAttrBean, position) && mSelectSaleAttrBean.size() > 0) {
                             saleAttrBean.setSelect(false);
+                        }
+                        //团购
+                        for (int i1 = 0; i1 < similarGroupSkuIds.size(); i1++) {
+                            if (similarGroupSkuIds.get(i1).equals(saleAttrBean.getSkuIds().get(j))) {
+                                saleAttrBean.setSelect(false);
+                            }
                         }
                     }
                 }
