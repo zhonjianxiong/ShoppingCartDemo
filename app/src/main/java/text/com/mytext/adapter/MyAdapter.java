@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,11 +30,13 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     /** 库存列表 */
     private List<SaleDimensionsBean.StockBean> mStockBeanList;
 
-    private List<Integer> similarGroupSkuIds = new ArrayList<>();
+    private List<Integer> mSimilarGroupSkuIds;
 
     private Context mContext;
 
     private int mSelectSkuid = 0;
+    /** 是否为团购商品  默认是 false */
+    private boolean mIsGroupBuying = false;
 
     private int mPublicSkuid = 0;
 
@@ -46,12 +47,28 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         this.mDimBeanList = saleDimensionsBean.getDim();
         this.mStockBeanList = saleDimensionsBean.getStock();
         mSelectSaleAttrBean = new HashMap<>();
-        similarGroupSkuIds.add(50);
-        similarGroupSkuIds.add(51);
+
     }
 
-    public void setSelectSkuid(int mSelectSkuid) {
+
+    public void setSimilarGroupSkuIds(List<Integer> similarGroupSkuIds ) {
+        this.mSimilarGroupSkuIds = similarGroupSkuIds;
+    }
+
+    /**
+     * 设置已选中的产品
+     * @param mSelectSkuid  默认的或者已经选中的skuid
+     * @param isGroupBuying 是否为团购商品  默认是 false
+     */
+    public void setSelectSkuid(int mSelectSkuid, boolean isGroupBuying) {
         this.mSelectSkuid = mSelectSkuid;
+
+        //传入的skuid不能为空或者0，如果是就false,非团购善品
+        if (mSelectSkuid == 0) {
+            this.mIsGroupBuying = false;
+        } else {
+            this.mIsGroupBuying = isGroupBuying;
+        }
     }
 
     public Map<Integer, SaleDimensionsBean.DimBean.SaleAttrBean> getSelectSaleAttrBean() {
@@ -150,8 +167,8 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                             saleAttrBean.setSelect(false);
                         }
                         //团购
-                        for (int i1 = 0; i1 < similarGroupSkuIds.size(); i1++) {
-                            if (similarGroupSkuIds.get(i1).equals(saleAttrBean.getSkuIds().get(j))) {
+                        for (int i1 = 0; i1 < mSimilarGroupSkuIds.size(); i1++) {
+                            if (mSimilarGroupSkuIds.get(i1).equals(saleAttrBean.getSkuIds().get(j))) {
                                 saleAttrBean.setSelect(false);
                             }
                         }
@@ -160,17 +177,28 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             }
         }
         if (saleAttrBean.isSelect()) { //可选项
-            tvChild.setEnabled(true);
             //已经选择的规格,显示红色
             if (mSelectSaleAttrBean.get(position) != null && mSelectSaleAttrBean.get(position).getSaleValue().equals(saleAttrBean.getSaleValue())) {
+                if (mIsGroupBuying) {//团购商品
+                    tvChild.setEnabled(false);
+                } else {
+                    tvChild.setEnabled(true);
+                }
                 for (int i = 0; i < saleAttrBean.getSkuIds().size(); i++) {
                     mPublicSkuidArr.append(saleAttrBean.getSkuIds().get(i) + ",");
                 }
                 tvChild.setBackgroundResource(R.drawable.frame_reed_gray_10);
                 tvChild.setTextColor(mContext.getResources().getColor(R.color.color_dd4e40));
             } else { // 未选择
-                tvChild.setBackgroundResource(R.drawable.frame_f4_10);
-                tvChild.setTextColor(mContext.getResources().getColor(R.color.color_333333));
+                if (mIsGroupBuying) {//团购商品
+                    tvChild.setEnabled(false);
+                    tvChild.setBackgroundResource(R.drawable.frame_f4_10);
+                    tvChild.setTextColor(mContext.getResources().getColor(R.color.color_33171717));
+                } else {//非团购
+                    tvChild.setEnabled(true);
+                    tvChild.setBackgroundResource(R.drawable.frame_f4_10);
+                    tvChild.setTextColor(mContext.getResources().getColor(R.color.color_333333));
+                }
             }
         } else { //库存不足或skuid不匹配，不可选择
             tvChild.setEnabled(false);

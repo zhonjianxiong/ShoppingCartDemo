@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static int PUBLIC_SKUID = 0;
+    public static int PUBLIC_SKUID = 5559;
 
     private TextView mTvPublicSkuid;
 

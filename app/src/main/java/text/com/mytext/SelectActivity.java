@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import text.com.mytext.adapter.MyAdapter;
@@ -74,8 +76,12 @@ public class SelectActivity extends AppCompatActivity {
         }
         Log.e("selectJson", ConstantsHelper.selectJson);
         mAdapter = new MyAdapter(mContext, saleDimensionsBean);
-        //设置默认的skuid
-        mAdapter.setSelectSkuid(MainActivity.PUBLIC_SKUID);
+        //设置默认的skuid,是否是团购商品
+        mAdapter.setSelectSkuid(MainActivity.PUBLIC_SKUID, true);
+        List<Integer> similarGroupSkuIds = new ArrayList<>();
+        similarGroupSkuIds.add(50);
+        similarGroupSkuIds.add(51);
+        mAdapter.setSimilarGroupSkuIds(similarGroupSkuIds);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(SelectActivity.this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(mAdapter);
         select();
